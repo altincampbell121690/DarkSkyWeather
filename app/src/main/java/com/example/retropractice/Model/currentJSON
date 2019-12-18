@@ -1,0 +1,26 @@
+}
+"latitude": 42.3601,
+    "longitude": -71.0589,
+    "timezone": "America/New_York",
+    "currently": {
+        "time": 1576634472,
+        "summary": "Overcast",
+        "icon": "cloudy",
+        "nearestStormDistance": 0,
+        "precipIntensity": 0.002,
+        "precipIntensityError": 0,
+        "precipProbability": 0.23,
+        "precipType": "rain",
+        "temperature": 32.89,
+        "apparentTemperature": 24.98,
+        "dewPoint": 31.48,
+        "humidity": 0.94,
+        "pressure": 1003.8,
+        "windSpeed": 9.71,
+        "windGust": 11.76,
+        "windBearing": 359,
+        "cloudCover": 1,
+        "uvIndex": 0,
+        "visibility": 5.006,
+        "ozone": 311.3
+    }
