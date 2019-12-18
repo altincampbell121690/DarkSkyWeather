@@ -14,3 +14,5 @@ var dailyData: List<Data> = listOf<Data>()
 var isPermitted : Boolean = false
 var isApiConnected:Boolean =false
 var forcast:Forcast? = null
+var long: Double? = null
+var lat: Double? = null

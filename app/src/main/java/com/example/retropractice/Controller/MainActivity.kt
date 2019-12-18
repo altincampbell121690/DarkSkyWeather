@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import retrofit2.*
 
 
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     public val RequestPermissionsCode: Int = 1
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,7 +47,19 @@ class MainActivity : AppCompatActivity() {
         } else {
 
         }
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener(
+                this
+            ) { location ->
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) { // Logic to handle location object
+                    long = location.latitude
+                    lat = location.longitude
+                } else {
+                    Log.d("ALTIN", "LOCATION NULL")
+                }
+            }
         //   textApiResult
 //        val retrofit = Retrofit.Builder()
 //            .baseUrl(BASE_URL)
