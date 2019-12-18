@@ -24,3 +24,16 @@
         "visibility": 5.006,
         "ozone": 311.3
     }
+
+    clear-day,
+    clear-night,
+    rain,
+    snow,
+    sleet,
+    wind,
+    fog,
+    cloudy,
+    partly-cloudy-day,
+    or partly-cloudy-night
+    hail,
+    thunderstorm, or tornado,

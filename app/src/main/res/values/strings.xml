@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RetroPractice</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="windMPH">30mph</string>
+    <string name="tempDaily">47</string>
+    <string name="percipDaily">0%</string>
 </resources>
