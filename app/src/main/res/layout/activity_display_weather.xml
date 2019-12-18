@@ -23,6 +23,8 @@
         android:id="@+id/locationTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:paddingTop="70dp"
         android:text="city, state"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -35,6 +37,7 @@
         android:id="@+id/currentTimeTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="7:45"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -47,6 +50,7 @@
         android:id="@+id/currentTempTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="65"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -59,6 +63,7 @@
         android:id="@+id/summaryTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="cleary and sunny"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -72,7 +77,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foregroundGravity="center_horizontal"
-        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +116,8 @@
             android:id="@+id/weatherStats"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:textAlignment="center">
 
@@ -155,6 +161,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="409dp"
         android:layout_height="457dp"
+        app:layout_constraintTop_toBottomOf="@id/weatherInfoContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
