@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.github.pwittchen:weathericonview:1.1.0'
     implementation project(path: ':SkyconsLibrary')
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.preference:preference-ktx:1.1.0"
 
 
 }
