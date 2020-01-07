@@ -58,10 +58,14 @@ class dailyItemRecyclerViewAdapter(val context: Context, val dailyDataList: List
             val dateRepresentation = cal.time
 
 
-            val resourceId = context.resources.getIdentifier(dataItem.icon, "drawable",context.packageName) //?
+            println("------*ALTIN*--------\n${dataItem.icon}\n------*ALTIN*--------\\")
+            println("------*ALTIN*--------\n${dataItem.icon.replace('-','_')}\n------*ALTIN*--------\n")
+            val imgStr = dataItem.icon.replace('-','_')
+            println(imgStr)
+            val resourceId = context.resources.getIdentifier(imgStr, "drawable",context.packageName) //?
             iconImg.setImageResource(resourceId)
            // dayText.text = dataItem.time.toString() // i need to convert this from UNIX
-            println("-----\n${dateRepresentation}\n----")
+           // println("-----\n${dateRepresentation}\n----")
             dayText.text = regexToString(dateRepresentation.toString(),"""([A-Z][a-z][a-z])""" )
             highTemp.text = "${dataItem.temperatureHigh}°"
             lowTemp.text = "${dataItem.temperatureLow}°"
