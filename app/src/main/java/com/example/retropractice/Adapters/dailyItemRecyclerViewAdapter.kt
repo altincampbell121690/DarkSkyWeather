@@ -9,8 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retropractice.Model.Data
 import com.example.retropractice.R
+import com.example.retropractice.Utilities.getCurrDate
+import com.example.retropractice.Utilities.regexToString
+import com.example.retropractice.Utilities.toMonth
+import java.util.*
 
-class dailyItemAdapter(val context: Context, val dailyDataList: List<Data>, val dailyItemClick: (Data)->Unit) : RecyclerView.Adapter<dailyItemAdapter.RvHolder>() {
+class dailyItemRecyclerViewAdapter(val context: Context, val dailyDataList: List<Data>, val dailyItemClick: (Data)->Unit) : RecyclerView.Adapter<dailyItemRecyclerViewAdapter.RvHolder>() {
 
     inner class RvHolder(itemView: View, val itemClick: (Data) -> Unit) : RecyclerView.ViewHolder(itemView) { // so we create one <- view holder
 
@@ -32,11 +36,35 @@ class dailyItemAdapter(val context: Context, val dailyDataList: List<Data>, val 
          * @param context
          */
         fun bindCategory(dataItem:Data, context: Context){ // need context to find resource based on the name
+
+
+            val zuluTime = getCurrDate(dataItem.time.toLong())
+            println(zuluTime)
+            val regexYear = """(2\d\d\d)"""
+            val regexMonth= """-(\d\d)-"""
+            val regexDay = """([1-9]?[0-9]) """
+            var year:String = ""
+            var month:String = ""
+            var day:String = ""
+
+            year = regexToString(zuluTime,regexYear)
+            month = regexToString(zuluTime,regexMonth)
+            day = regexToString(zuluTime,regexDay)
+
+            val cal = Calendar.getInstance()
+            cal[Calendar.YEAR] = year.toInt()
+            cal[Calendar.MONTH] = toMonth(month)
+            cal[Calendar.DAY_OF_MONTH] = day.toInt()
+            val dateRepresentation = cal.time
+
+
             val resourceId = context.resources.getIdentifier(dataItem.icon, "drawable",context.packageName) //?
             iconImg.setImageResource(resourceId)
-            dayText.text = dataItem.time.toString() // i need to convert this from UNIX
-            highTemp.text = dataItem.temperatureHigh.toString()
-            lowTemp.text = dataItem.temperatureLow.toString()
+           // dayText.text = dataItem.time.toString() // i need to convert this from UNIX
+            println("-----\n${dateRepresentation}\n----")
+            dayText.text = regexToString(dateRepresentation.toString(),"""([A-Z][a-z][a-z])""" )
+            highTemp.text = "${dataItem.temperatureHigh}°"
+            lowTemp.text = "${dataItem.temperatureLow}°"
 
             itemView.setOnClickListener { dailyItemClick(dataItem) } // set onclick for each item?
         }

@@ -3,7 +3,7 @@ package com.example.retropractice.Model
 
 import com.google.gson.annotations.SerializedName
 
-data class Forcast(
+data class Forecast(
     @SerializedName("alerts")
     var alerts: List<Alert>,
     @SerializedName("currently")

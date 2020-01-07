@@ -1,7 +1,9 @@
 package com.example.retropractice.Utilities
 
 import com.example.retropractice.Model.Data
-import com.example.retropractice.Model.Forcast
+import com.example.retropractice.Model.Forecast
+import java.text.SimpleDateFormat
+import java.util.*
 
 //const val BASE_URL = "https://api.darksky.net/forecast/"
 //const val API_KEY = "b7d4f712c2ef1755ea5f3f61118f9140"
@@ -13,7 +15,7 @@ var isNetworkConnected: Boolean = false
 var dailyData: List<Data> = listOf<Data>()
 var isPermitted : Boolean = false
 var isApiConnected:Boolean =false
-var forcast:Forcast? = null
+var forecast:Forecast? = null
 var long: Double? = null
 var lat: Double? = null
 
@@ -59,3 +61,86 @@ fun regexConcat(str: String, regex1: String, regex2: String): String {
     }
     return capture
 }
+
+fun toMonth(month: String): Int{
+    return when (month){
+        "01"-> Calendar.JANUARY
+        "02"-> Calendar.FEBRUARY
+        "03"-> Calendar.MARCH
+        "04"-> Calendar.APRIL
+        "05"-> Calendar.MAY
+        "06"-> Calendar.JUNE
+        "07"-> Calendar.JULY
+        "08"-> Calendar.AUGUST
+        "09"-> Calendar.SEPTEMBER
+        "10"-> Calendar.OCTOBER
+        "11"-> Calendar.NOVEMBER
+        "12"-> Calendar.DECEMBER
+        else -> 11
+    }
+}
+fun regexToString(str:String, regex1:String):String{
+    val regX1 = regex1.toRegex()
+    var capture: String = ""
+    var matchResult = regX1.find(str)
+    if (matchResult != null) {
+        println(matchResult.groupValues)
+        capture += matchResult.groupValues[1]
+    }
+    return capture
+}
+
+
+
+fun getCurrTime(unix_seconds: Long): String {
+    //Unix seconds
+    // val unix_seconds: Long = forcast!!.currently.time.toLong()
+    //convert seconds to milliseconds
+    val date = Date(unix_seconds * 1000L)
+    // format of the date
+    val jdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
+
+    val calendar: Calendar = GregorianCalendar()
+    val timeZone = calendar.timeZone
+    val gmtZone = getGMT(timeZone.displayName)
+
+    jdf.timeZone = TimeZone.getTimeZone(gmtZone)
+
+//                            jdf.timeZone = TimeZone.getTimeZone("GMT-8")
+    val java_date: String = jdf.format(date)
+
+    val regex1 = """([1-9]?\d:\d\d)"""
+    val regex2 = """( [a-zA-Z][a-zA-Z])"""
+    val time = regexConcat(java_date,regex1,regex2)
+    println("----Altin--------\n$java_date\n----Altin--------\n")
+//        println("\n\n${regex.find(java_date)!!.value}\n\n")
+
+
+    return time
+
+}
+
+fun getCurrDate(unix_seconds: Long): String {
+    //Unix seconds
+    // val unix_seconds: Long = forcast!!.currently.time.toLong()
+    //convert seconds to milliseconds
+    val date = Date(unix_seconds * 1000L)
+    // format of the date
+    val jdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa")
+
+    val calendar: Calendar = GregorianCalendar()
+    val timeZone = calendar.timeZone
+    val gmtZone = getGMT(timeZone.displayName)
+
+    jdf.timeZone = TimeZone.getTimeZone(gmtZone)
+
+//                            jdf.timeZone = TimeZone.getTimeZone("GMT-8")
+    val java_date: String = jdf.format(date)
+    println("----Altin--------\n$java_date\n----Altin--------\n")
+//        println("\n\n${regex.find(java_date)!!.value}\n\n")
+
+
+    return java_date
+
+}
+
