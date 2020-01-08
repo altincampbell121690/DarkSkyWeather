@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkConnectivity(): Unit {
         val connectionMngr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var status = null
         val networkRequest = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         connectionMngr.run {
             registerNetworkCallback(networkRequest, networkCallback)
         }
+
     }
 
     fun onEnterClicked(view: View) {

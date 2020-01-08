@@ -1,5 +1,6 @@
 package com.example.retropractice.Controller
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
@@ -136,6 +137,9 @@ class displayWeather : AppCompatActivity() {
 
         myAdapter = dailyItemRecyclerViewAdapter(this, dailyData){data:Data ->
             Toast.makeText(this,"clicked", Toast.LENGTH_SHORT).show()
+            val testIntent = Intent(this,SkyConDetails::class.java )
+            testIntent.putExtra(EXTRA_DATA,data)
+            startActivity(testIntent)
         }
 
         dailyWeatherListView.adapter = myAdapter

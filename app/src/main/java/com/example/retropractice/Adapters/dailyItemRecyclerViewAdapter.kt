@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.retropractice.Model.Data
 import com.example.retropractice.R
 import com.example.retropractice.Utilities.getCurrDate
+import com.example.retropractice.Utilities.getDateRepresentation
 import com.example.retropractice.Utilities.regexToString
 import com.example.retropractice.Utilities.toMonth
 import java.util.*
@@ -37,8 +38,8 @@ class dailyItemRecyclerViewAdapter(val context: Context, val dailyDataList: List
          */
         fun bindCategory(dataItem:Data, context: Context){ // need context to find resource based on the name
 
-
-            val zuluTime = getCurrDate(dataItem.time.toLong())
+// grabs the data from the retrofit dataclass and binds it to the recycler view
+           /* val zuluTime = getCurrDate(dataItem.time.toLong())
             println(zuluTime)
             val regexYear = """(2\d\d\d)"""
             val regexMonth= """-(\d\d)-"""
@@ -54,12 +55,9 @@ class dailyItemRecyclerViewAdapter(val context: Context, val dailyDataList: List
             val cal = Calendar.getInstance()
             cal[Calendar.YEAR] = year.toInt()
             cal[Calendar.MONTH] = toMonth(month)
-            cal[Calendar.DAY_OF_MONTH] = day.toInt()
-            val dateRepresentation = cal.time
+            cal[Calendar.DAY_OF_MONTH] = day.toInt()*/
+            val dateRepresentation = getDateRepresentation(dataItem.time.toLong())
 
-
-            println("------*ALTIN*--------\n${dataItem.icon}\n------*ALTIN*--------\\")
-            println("------*ALTIN*--------\n${dataItem.icon.replace('-','_')}\n------*ALTIN*--------\n")
             val imgStr = dataItem.icon.replace('-','_')
             println(imgStr)
             val resourceId = context.resources.getIdentifier(imgStr, "drawable",context.packageName) //?
@@ -89,4 +87,6 @@ class dailyItemRecyclerViewAdapter(val context: Context, val dailyDataList: List
     override fun onBindViewHolder(myViewHolder: RvHolder, position: Int) {
         myViewHolder.bindCategory(dailyDataList[position], context)
     }
+
+
 }

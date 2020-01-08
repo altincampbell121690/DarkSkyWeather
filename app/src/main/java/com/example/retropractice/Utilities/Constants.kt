@@ -9,6 +9,8 @@ import java.util.*
 //const val API_KEY = "b7d4f712c2ef1755ea5f3f61118f9140"
 
 const val BASE_URL = "https://api.darksky.net/forecast/b7d4f712c2ef1755ea5f3f61118f9140/"
+
+const val EXTRA_DATA = "data"
 //const val  URL_REGISTER ="${BASE_URL}account/register"
 
 var isNetworkConnected: Boolean = false
@@ -18,6 +20,8 @@ var isApiConnected:Boolean =false
 var forecast:Forecast? = null
 var long: Double? = null
 var lat: Double? = null
+
+
 
 fun getGMT(timeDisplay : String):String{
     return when(timeDisplay){
@@ -144,3 +148,37 @@ fun getCurrDate(unix_seconds: Long): String {
 
 }
 
+fun getDateRepresentation(dataTime:Long): Date{
+    val zuluTime = getCurrDate(dataTime)
+    println(zuluTime)
+    val regexYear = """(2\d\d\d)"""
+    val regexMonth= """-(\d\d)-"""
+    val regexDay = """([1-9]?[0-9]) """
+    var year:String = ""
+    var month:String = ""
+    var day:String = ""
+
+    year = regexToString(zuluTime,regexYear)
+    month = regexToString(zuluTime,regexMonth)
+    day = regexToString(zuluTime,regexDay)
+
+    val cal = Calendar.getInstance()
+    cal[Calendar.YEAR] = year.toInt()
+    cal[Calendar.MONTH] = toMonth(month)
+    cal[Calendar.DAY_OF_MONTH] = day.toInt()
+
+    return cal.time
+}
+
+fun dayOfWeek(day:String):String{
+    return when(day){
+        "Mon" -> "Monday"
+        "Tue" -> "Tuesday"
+        "Wed" -> "Wednesday"
+        "Thu" -> "Thursday"
+        "Fri" -> "Friday"
+        "Sat" -> "Saturday"
+        "Sun" -> "Sunday"
+        else -> "NOT FOUND"
+    }
+}

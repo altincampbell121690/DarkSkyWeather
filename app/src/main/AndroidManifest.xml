@@ -20,7 +20,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".Controller.displayWeather"></activity>
+        <activity android:name=".Controller.SkyConDetails"></activity>
+        <activity android:name=".Controller.displayWeather" />
 
         <meta-data
             android:name="com.android.gms.version"
