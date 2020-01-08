@@ -1,6 +1,8 @@
 package com.example.retropractice.Model
 
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Data(
@@ -84,4 +86,105 @@ data class Data(
     var windGustTime: Int,
     @SerializedName("windSpeed")
     var windSpeed: Double
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readString().toString(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readString().toString(),
+        parcel.readDouble(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readDouble()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeDouble(apparentTemperatureHigh)
+        parcel.writeInt(apparentTemperatureHighTime)
+        parcel.writeDouble(apparentTemperatureLow)
+        parcel.writeInt(apparentTemperatureLowTime)
+        parcel.writeDouble(apparentTemperatureMax)
+        parcel.writeInt(apparentTemperatureMaxTime)
+        parcel.writeDouble(apparentTemperatureMin)
+        parcel.writeInt(apparentTemperatureMinTime)
+        parcel.writeDouble(cloudCover)
+        parcel.writeDouble(dewPoint)
+        parcel.writeDouble(humidity)
+        parcel.writeString(icon)
+        parcel.writeDouble(moonPhase)
+        parcel.writeDouble(ozone)
+        parcel.writeDouble(precipAccumulation)
+        parcel.writeDouble(precipIntensity)
+        parcel.writeDouble(precipIntensityMax)
+        parcel.writeDouble(precipIntensityMaxTime)
+        parcel.writeDouble(precipProbability)
+        parcel.writeString(precipType)
+        parcel.writeDouble(pressure)
+        parcel.writeString(summary)
+        parcel.writeInt(sunriseTime)
+        parcel.writeInt(sunsetTime)
+        parcel.writeDouble(temperatureHigh)
+        parcel.writeInt(temperatureHighTime)
+        parcel.writeDouble(temperatureLow)
+        parcel.writeInt(temperatureLowTime)
+        parcel.writeDouble(temperatureMax)
+        parcel.writeInt(temperatureMaxTime)
+        parcel.writeDouble(temperatureMin)
+        parcel.writeInt(temperatureMinTime)
+        parcel.writeInt(time)
+        parcel.writeInt(uvIndex)
+        parcel.writeInt(uvIndexTime)
+        parcel.writeDouble(visibility)
+        parcel.writeInt(windBearing)
+        parcel.writeDouble(windGust)
+        parcel.writeInt(windGustTime)
+        parcel.writeDouble(windSpeed)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Data> {
+        override fun createFromParcel(parcel: Parcel): Data {
+            return Data(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Data?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

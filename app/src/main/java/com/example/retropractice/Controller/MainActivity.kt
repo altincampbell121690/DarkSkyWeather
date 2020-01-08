@@ -14,18 +14,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.retropractice.Model.Forcast
 import com.example.retropractice.R
-import com.example.retropractice.Services.RetrofitClient
-import com.example.retropractice.Services.WeatherService
-import com.example.retropractice.Utilities.*
-import com.networkCallback
-import retrofit2.converter.gson.GsonConverterFactory
-
+import com.example.retropractice.Utilities.LocationDataManager
+import com.example.retropractice.Utilities.isPermitted
+import com.example.retropractice.Utilities.lat
+import com.example.retropractice.Utilities.long
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import retrofit2.*
+import com.google.android.gms.location.*
+import com.networkCallback
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     public val RequestPermissionsCode: Int = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    //var locationDataManager = LocationDataManager(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,69 +43,19 @@ class MainActivity : AppCompatActivity() {
         ) {
             requestPermissions()
         } else {
+            Log.d("ALTIN", "PERMISSION Given previously")
+            val displayWeather = Intent(this, displayWeather::class.java)
+            startActivity(displayWeather)
 
         }
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener(
-                this
-            ) { location ->
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) { // Logic to handle location object
-                    long = location.latitude
-                    lat = location.longitude
-                } else {
-                    Log.d("ALTIN", "LOCATION NULL")
-                }
-            }
-        //   textApiResult
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl(BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//        val weatherService: WeatherService =
-//            RetrofitClient.getClient(BASE_URL)!!.create(WeatherService::class.java)
-//        val call: Call<Forcast> = weatherService.getWeather(42.3601, -71.0589)
 
-
-        //no name object
-      /*  call.enqueue(object : Callback<Forcast> {
-            override fun onFailure(call: Call<Forcast>, t: Throwable) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-               Log.d("ALTIN",t.message)
-            }
-
-            override fun onResponse(call: Call<Forcast>, response: Response<Forcast>) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                if (!response.isSuccessful) {
-                    Log.d("ALTIN","code: ${response.code()}")
-                    isApiConnected = false;
-                    return
-                }
-                isApiConnected = true
-                dailyData = response.body()!!.daily.data
-//              val dailyData: List<Data> = response.body()!!.daily.data
-
-
-*//*                for(data in dailyData ){
-                    var content:String = "";
-                    content += "daily:${data}/n/n"
-
-                    textApiResult.append(content)
-
-                }*//*
-
-            }
-
-        })*/
 
     }
 
 
     private fun checkConnectivity(): Unit {
         val connectionMngr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        val activeNetwork = connectionMngr.activeNetworkInfo
-//        val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
+        var status = null
         val networkRequest = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
@@ -115,16 +63,18 @@ class MainActivity : AppCompatActivity() {
         connectionMngr.run {
             registerNetworkCallback(networkRequest, networkCallback)
         }
-        if (isNetworkConnected) Toast.makeText(this, "connection available", Toast.LENGTH_SHORT).show()
-        else Toast.makeText(this, "NO connection available", Toast.LENGTH_SHORT).show()
-    }
 
+    }
 
     fun onEnterClicked(view: View) {
-        val displayWeather = Intent(this, displayWeather::class.java)
-        startActivity(displayWeather)
-    }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this,"NOT PERMITTED", Toast.LENGTH_SHORT).show()
+        }else{
+            val displayWeather = Intent(this, displayWeather::class.java)
+            startActivity(displayWeather)
+        }
 
+    }
 
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
@@ -132,11 +82,31 @@ class MainActivity : AppCompatActivity() {
             arrayOf<String>(ACCESS_FINE_LOCATION),
             RequestPermissionsCode
         )
-        isPermitted = (ActivityCompat.checkSelfPermission(
-            this,
-            ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED)
     }
 
 
 }
+/* override fun onStart() {
+     super.onStart()
+     val mLocationRequest = LocationRequest.create()
+     mLocationRequest.interval = 60000
+     mLocationRequest.fastestInterval = 5000
+     mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+     val mLocationCallback: LocationCallback = object : LocationCallback() {
+         override fun onLocationResult(locationResult: LocationResult) {
+             if (locationResult == null) {
+                 Log.d("ALTIN***", "LOCATION IS NULLL IN ONSTART")
+                 return
+             }
+             for (location in locationResult.locations) {
+                 if (location != null) {
+                     Log.d("ALTIN", "ONSTART  LOC")
+                     Log.d("ALTIN!!!!!!!","${location.latitude}, ${long}")
+                     locationDataManager.saveLocation(location.latitude, location.longitude)
+                 }
+             }
+         }
+     }
+     LocationServices.getFusedLocationProviderClient(this)
+         .requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+ }*/

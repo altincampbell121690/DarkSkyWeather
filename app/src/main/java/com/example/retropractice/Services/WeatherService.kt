@@ -1,6 +1,6 @@
 package com.example.retropractice.Services
 
-import com.example.retropractice.Model.Forcast
+import com.example.retropractice.Model.Forecast
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -9,10 +9,11 @@ interface WeatherService {
     //@GET("42.3601,-71.0589")
     @GET("{latitude},{longitude}")
     fun getWeather(
-        @Path("longitude") longitude: Double?,
-        @Path("latitude") latitude: Double?
+        @Path("latitude") latitude: Double?,
+        @Path("longitude") longitude: Double?
 
-    ): Call<Forcast>
+
+    ): Call<Forecast>
 }
 //
 //fun getWeather(
